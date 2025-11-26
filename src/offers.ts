@@ -19,13 +19,14 @@ export class OFR001 implements IOffer {
 
 export class OFR002 implements IOffer {
   isValid(pkg: Package): boolean {
-    return pkg.weight >= 50 && pkg.weight <= 150 && pkg.distance >= 50 && pkg.distance <= 250;
+    return pkg.weight >= 100 && pkg.weight <= 250 && pkg.distance >= 50 && pkg.distance <= 150;
   }
 
   discount(): number {
     return 0.07;
   }
 }
+
 
 export class OFR003 implements IOffer {
   isValid(pkg: Package): boolean {
