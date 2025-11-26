@@ -37,13 +37,43 @@ rl.question("Select mode (cost / time): ", (answer) => {
       // If this is the first line, extract expected number of packages
       if (lines.length === 1) {
         const parts = line.trim().split(/\s+/);
+        const baseCost = Number(parts[0]);
+        const numPackages = Number(parts[1]);
+        
+        if (isNaN(baseCost) || isNaN(numPackages)) {
+          console.error("Error: Base cost and number of packages must be numbers.");
+          rl.close();
+          return;
+        }
+        
+        if (mode === "time") {
+          const numVehicles = Number(parts[2]);
+          const maxSpeed = Number(parts[3]);
+          const maxWeight = Number(parts[4]);
+          if (isNaN(numVehicles) || isNaN(maxSpeed) || isNaN(maxWeight)) {
+            console.error("Error: All header values must be numbers.");
+            rl.close();
+            return;
+          }
+        }
+        
         if (parts.length >= 2) {
-          expectedLines = 1 + Number(parts[1]); // 1 header + N packages
+          expectedLines = 1 + numPackages; // 1 header + N packages
           if (mode === "cost") {
             console.log(`Enter ${parts[1]} package details (format: PKG_ID WEIGHT DISTANCE OFFER_CODE):`);
           } else if (mode === "time") {
             console.log(`Enter ${parts[1]} package details (format: PKG_ID WEIGHT DISTANCE OFFER_CODE):`);
           }
+        }
+      } else {
+        const parts = line.trim().split(/\s+/);
+        const weight = Number(parts[1]);
+        const distance = Number(parts[2]);
+        
+        if (isNaN(weight) || isNaN(distance)) {
+          console.error("Error: Weight and distance must be numbers.");
+          rl.close();
+          return;
         }
       }
       

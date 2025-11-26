@@ -14,24 +14,26 @@ export class Scheduler {
     });
 
     for (const pkg of packages) {
-      // Check if we have vehicles
       if (this.vehicles.length === 0) {
         console.error("No vehicles available for delivery");
         continue;
       }
       
-      // Find earliest available vehicle that can carry this package
-      const vehicle = this.vehicles.reduce((earliest, v) =>
-        v.availableAt < earliest.availableAt ? v : earliest
-      );
+      // Find vehicle with earliest availability that can carry package
+      let bestVehicle: Vehicle | undefined = this.vehicles[0];
+      for (const v of this.vehicles) {
+        if (bestVehicle && v.availableAt < bestVehicle.availableAt && pkg.weight <= v.maxWeight) {
+          bestVehicle = v;
+        }
+      }
 
-      if (pkg.weight <= vehicle.maxWeight) {
-        const travelTime = pkg.distance / vehicle.maxSpeed;
-        const deliveryTime = vehicle.availableAt + travelTime;
+      if (bestVehicle && pkg.weight <= bestVehicle.maxWeight) {
+        const travelTime = pkg.distance / bestVehicle.maxSpeed;
+        const deliveryTime = bestVehicle.availableAt + travelTime;
         deliveryTimes.set(pkg.pkgId!, deliveryTime);
 
         // Update vehicle availability (return trip)
-        vehicle.availableAt = deliveryTime + travelTime;
+        bestVehicle.availableAt = deliveryTime + travelTime;
       }
     }
 
