@@ -1,6 +1,8 @@
 # Compiled JavaScript files
 *.js
 *.js.map
+!**/__tests__/**/*.js
+
 
 # TypeScript declaration files
 *.d.ts
