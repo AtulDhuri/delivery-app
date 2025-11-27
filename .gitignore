@@ -2,7 +2,8 @@
 *.js
 *.js.map
 !**/__tests__/**/*.js
-
+!jest.config.js
+!tsconfig.json
 
 # TypeScript declaration files
 *.d.ts
