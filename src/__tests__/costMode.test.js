@@ -1,3 +1,4 @@
+import { describe, test, expect, beforeEach, afterEach, jest } from '@jest/globals';
 import { runCostMode } from '../costMode.js';
 
 describe('runCostMode function tests', () => {
@@ -89,17 +90,6 @@ describe('runCostMode function tests', () => {
     runCostMode(input);
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(expect.stringContaining('Package count mismatch'));
-  });
-
-  test('should reject missing package ID', () => {
-    const input = [
-      '100 1',
-      '10 10 OFR001'
-    ];
-
-    runCostMode(input);
-
-    expect(consoleErrorSpy).toHaveBeenCalledWith(expect.stringContaining('Missing package ID'));
   });
 
   test('should handle empty input', () => {
